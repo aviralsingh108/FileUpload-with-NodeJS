@@ -1,6 +1,20 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
+//Connect DB using Mongoose
+mongoose
+  .connect("mongodb://localhost:27017/fileUpload", { useNewUrlParser: true })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Error connectiong to MongoDB", err));
+
+//create express app
 const app = express();
 
-const port = process.env.PORT || 3000;
+//Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
+// start server
+const port = process.env.PORT || 3000;
 app.listen(port, () => console.log("Server is on"));
