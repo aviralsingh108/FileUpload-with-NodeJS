@@ -27,6 +27,18 @@ app.use("/", express.static(path.join(__dirname, "static")));
 app.post("/api/register", async (req, res) => {
   console.log(req.body);
   const { username, password: plainTextPassword } = req.body;
+  if (!username || typeof username !== "string") {
+    return res.json({ status: "error", error: "Invalid Username" });
+  }
+  if (!plainTextPassword || typeof plainTextPassword !== "string") {
+    return res.json({ status: "error", error: "Invalid Password" });
+  }
+  if (plainTextPassword.length < 5) {
+    return res.json({
+      status: "error",
+      error: "Password length shouldn't be lesser than 5 characters",
+    });
+  }
   const password = await bcrypt.hash(plainTextPassword, 10);
   try {
     const response = await User.create({
@@ -35,8 +47,17 @@ app.post("/api/register", async (req, res) => {
     });
     console.log(response);
   } catch (error) {
-    return res.json({ status: error });
+    console.log(error.code == 11000);
+    if (error.code == 11000) {
+      console.log("inside");
+      return res.status(400).json({
+        status: "error",
+        error: "Username already in use",
+      });
+    }
+    throw error;
   }
+  res.json({ status: "ok" });
 });
 
 // start server
