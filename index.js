@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("./models/user");
+const JWT_SECRET = "jsonwebtokensecretisalwayssecretasweallknowblinkblink";
 
 //Connect DB using Mongoose
 mongoose
@@ -73,9 +74,13 @@ app.post("/api/login", async (req, res) => {
       error: "User Data doesn't exists",
     });
   if (await bcrypt.compare(plainTextPassword, userData.password)) {
+    const token = jwt.sign(
+      { id: userData._id, username: userData.username },
+      JWT_SECRET
+    );
     return res.json({
       status: "Ok",
-      data: "",
+      data: token,
     });
   }
   return res.json({
