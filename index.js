@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const User = require("./models/user");
 
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 app.use("/", express.static(path.join(__dirname, "static")));
 
 // API's
+//Resgiteration
 app.post("/api/register", async (req, res) => {
   console.log(req.body);
   const { username, password: plainTextPassword } = req.body;
@@ -58,6 +60,31 @@ app.post("/api/register", async (req, res) => {
     throw error;
   }
   res.json({ status: "ok" });
+});
+
+//Login
+app.post("/api/login", async (req, res) => {
+  const { username, password: plainTextPassword } = req.body;
+  console.log(req.body);
+  const userData = await User.findOne({ username }).lean();
+  if (!userData)
+    return res.json({
+      status: "error",
+      error: "User Data doesn't exists",
+    });
+  if (await bcrypt.compare(plainTextPassword, userData.password)) {
+    return res.json({
+      status: "Ok",
+      data: "",
+    });
+  }
+  return res.json({
+    status: "error",
+    error: "User Data doesn't exists",
+  });
+  console.log(userData);
+  try {
+  } catch (error) {}
 });
 
 // start server
