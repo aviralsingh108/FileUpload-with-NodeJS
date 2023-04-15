@@ -79,7 +79,7 @@ app.post("/api/login", async (req, res) => {
       JWT_SECRET
     );
     return res.json({
-      status: "Ok",
+      status: "ok",
       data: token,
     });
   }
@@ -91,6 +91,9 @@ app.post("/api/login", async (req, res) => {
   try {
   } catch (error) {}
 });
+
+// Change Password
+app.post("/api/change-password", (req, res) => {});
 
 // start server
 const port = process.env.PORT || 3000;
