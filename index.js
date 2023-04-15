@@ -28,7 +28,6 @@ app.use("/", express.static(path.join(__dirname, "static")));
 // API's
 //Resgiteration
 app.post("/api/register", async (req, res) => {
-  console.log(req.body);
   const { username, password: plainTextPassword } = req.body;
   if (!username || typeof username !== "string") {
     return res.json({ status: "error", error: "Invalid Username" });
@@ -48,11 +47,8 @@ app.post("/api/register", async (req, res) => {
       username,
       password,
     });
-    console.log(response);
   } catch (error) {
-    console.log(error.code == 11000);
     if (error.code == 11000) {
-      console.log("inside");
       return res.status(400).json({
         status: "error",
         error: "Username already in use",
@@ -66,7 +62,6 @@ app.post("/api/register", async (req, res) => {
 //Login
 app.post("/api/login", async (req, res) => {
   const { username, password: plainTextPassword } = req.body;
-  console.log(req.body);
   const userData = await User.findOne({ username }).lean();
   if (!userData)
     return res.json({
@@ -87,13 +82,36 @@ app.post("/api/login", async (req, res) => {
     status: "error",
     error: "User Data doesn't exists",
   });
-  console.log(userData);
-  try {
-  } catch (error) {}
 });
 
 // Change Password
-app.post("/api/change-password", (req, res) => {});
+app.post("/api/change-password", async (req, res) => {
+  const { token, newPassword: plainTextPassword } = req.body;
+
+  if (!plainTextPassword || typeof plainTextPassword !== "string") {
+    return res.json({ status: "error", error: "Invalid Password" });
+  }
+  if (plainTextPassword.length < 5) {
+    return res.json({
+      status: "error",
+      error: "Password length shouldn't be lesser than 5 characters",
+    });
+  }
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const _id = user.id;
+    const password = await bcrypt.hash(plainTextPassword, 10);
+    await User.updateOne(
+      { _id },
+      {
+        $set: { password },
+      }
+    );
+    res.json({ status: "ok" });
+  } catch (error) {
+    res.json({ status: "error", error: "mehnat karo" });
+  }
+});
 
 // start server
 const port = process.env.PORT || 3000;
