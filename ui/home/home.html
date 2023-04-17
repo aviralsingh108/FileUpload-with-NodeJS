@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>File Upload App</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+    <header>
+        <div class="user-icon"></div>
+        <h1>File Upload App</h1>
+        <button id="logout-btn">Logout</button>
+    </header>
+    <main>
+        <div class="upload-container">
+            <label for="file-upload" class="file-label">Choose a file to upload:</label>
+            <input type="file" id="file-upload">
+            <button id="upload-btn">Upload</button>
+        </div>
+        <div id="file-list-container">
+            <h2>Uploaded Files</h2>
+            <ul id="file-list"></ul>
+        </div>
+    </main>
+    <script src="home.js"></script>
+</body>
+
+</html>

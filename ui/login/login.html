@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>File Upload App</title>
+    <link rel="stylesheet" type="text/css" href="/login/login.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>File Upload App</h1>
+        <form id="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <input type="submit" value="Submit">
+        </form>
+        <p><a href="#" id="forget-password">Forgot Password?</a></p>
+        <p><a href="#" id="registration-link">Registration Form</a></p>
+    </div>
+    <script>
+        const form = document.getElementById('login-form')
+        const registrationLink = document.getElementById('registration-link')
+        const forgetPassword = document.getElementById('forget-password')
+        form.addEventListener('submit', login)
+        registrationLink.addEventListener('click', navigateToRegistration)
+        forgetPassword.addEventListener('click', navigateToForgetPassword)
+
+        function navigateToRegistration(event) {
+            console.log('his');
+            event.preventDefault()
+            window.location.href = './../registration/registration.html'
+        }
+        function navigateToForgetPassword(event) {
+            console.log('his');
+            event.preventDefault()
+            window.location.href = './changePassword.html'
+        }
+
+        async function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value
+            const password = document.getElementById('password').value
+
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username,
+                    password
+                })
+            }).then((res) => res.json())
+
+            if (response.status === 'ok') {
+                localStorage.setItem('token', response.data)
+                window.location.href = '../home/home.html'
+                alert('success')
+            }
+            else {
+                alert(response.error)
+            }
+        }
+    </script>
+</body>
+
+</html>
