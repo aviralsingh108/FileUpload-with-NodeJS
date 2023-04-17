@@ -17,27 +17,12 @@
             <input type="password" id="password" name="password" required><br><br>
             <input type="submit" value="Submit">
         </form>
-        <p><a href="#" id="forget-password">Forgot Password?</a></p>
-        <p><a href="#" id="registration-link">Registration Form</a></p>
+        <p><a href="changePassword.html" id="forget-password">Forgot Password?</a></p>
+        <p><a href="../registration/registration.html" id="registration-link">Registration Form</a></p>
     </div>
     <script>
         const form = document.getElementById('login-form')
-        const registrationLink = document.getElementById('registration-link')
-        const forgetPassword = document.getElementById('forget-password')
         form.addEventListener('submit', login)
-        registrationLink.addEventListener('click', navigateToRegistration)
-        forgetPassword.addEventListener('click', navigateToForgetPassword)
-
-        function navigateToRegistration(event) {
-            console.log('his');
-            event.preventDefault()
-            window.location.href = './../registration/registration.html'
-        }
-        function navigateToForgetPassword(event) {
-            console.log('his');
-            event.preventDefault()
-            window.location.href = './changePassword.html'
-        }
 
         async function login(event) {
             event.preventDefault();

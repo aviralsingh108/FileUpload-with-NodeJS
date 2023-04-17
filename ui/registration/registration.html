@@ -35,6 +35,13 @@
                     password
                 })
             }).then((res) => res.json())
+            if (result.status === 'ok') {
+                alert('Successfully Registered')
+                window.location.href = './../login/login.html'
+            }
+            else {
+                alert(result.error)
+            }
         }
     </script>
 </body>
