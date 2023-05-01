@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            min-height: 100px;
+            min-width: 100px;
+            padding: 30px;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <input type="text" onkeyup="debounce()" /> -->
+    <div id="grandParent">
+        <div id="parent">
+            <div id="child">
+
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelector('#grandParent').addEventListener('click', (e) => {
+            console.log('grand parent clicked');
+            e.stopPropagation()
+        }, true)
+        document.querySelector('#parent').addEventListener('click', () => {
+            console.log('parent clicked');
+        })
+        document.querySelector('#child').addEventListener('click', () => {
+            console.log('child clicked');
+        }, true)
+
+
+
+        // const sum = function (a) {
+        //     return function (b) {
+        //         if (b)
+        //             return sum(a + b)
+        //         else
+        //             return a
+        //     }
+        // }
+        // console.log(sum(5)(2)(1)(2)());
+
+
+        // document.querySelector('#grandParent').addEventListener('click', (e) => {
+        //     console.log(e.target.id);
+        //     window.location.href = '/' + e.target.id
+        // })
+
+
+        // document.getElementById('grandParent').addEventListener('click', () => {
+        //     console.log('grand parent clicked');
+        // }, true)
+        // document.getElementById('parent').addEventListener('click', (e) => {
+        //     console.log('parent clicked');
+        //     e.stopPropagation()
+        // }, true)
+        // document.getElementById('child').addEventListener('click', (e) => {
+        //     // e.stopPropagation()
+        //     console.log('child clicked');
+        // }, true)
+        // let count = 0;
+        // let setting;
+        // function debounce() {
+        //     clearTimeout(setting)
+        //     setting = setTimeout(() => {
+        //         console.log('fetching api', count++);
+        //     }, 200)
+        // }
+        // const a = [
+        //     { fname: 'a', lname: 'b', age: 10 },
+        //     { fname: 'b', lname: 'b', age: 11 },
+        //     { fname: 'c', lname: 'b', age: 10 },
+        //     { fname: 'c', lname: 'b', age: 11 }
+        // ]
+        // let b = a.reduce((acc, curr) => {
+        //     if (acc[curr.age]) {
+        //         acc[curr.age] += 1
+        //     }
+        //     else
+        //         acc[curr.age] = 1
+        //     return acc
+        // }, {})
+        // let b = a.filter((item) => {
+        //     if (item.age > 10)
+        //         return item.fname
+        // }).map((curr) => curr.fname)
+        // console.log(b);
+
+        // let c = a.reduce((acc, cur) => {
+        //     if (cur.age > 10)
+        //         acc.push(cur.fname)
+        //     return acc
+        // }, [])
+        // console.log('------', c);
+
+        // let arr = ['a', 'b']
+        // let object = {
+        //     name: 'a',
+        //     age: 20,
+
+        // }
+        // let getIntro = function (city, state) {
+        //     console.log(this.name + ' age is = ' + this.age + ' and is from ' + city + ' and state is ' + state);
+        // }
+        // let object2 = {
+        //     name: 'b',
+        //     age: 21,
+        // }
+        // Function.prototype.myBind = function (...args) {
+        //     let obj = this
+        //     let params = args.splice(1)
+        //     return function (...args1) {
+        //         obj.apply(args[0], [...params, ...args1])
+        //     }
+        // }
+
+        // console.log(getIntro.call(object, 'ksp'))
+        // console.log(getIntro.call(object2, 'kssp'))
+        // console.log(getIntro.apply(object2, ['kssp', 'sksjs']))
+        // console.log(getIntro.bind(object, 'kssp')())
+        // let printName = getIntro.myBind(object2, 'kssp')
+        // console.log(printName('avi'))
+
+    </script>
+</body>
+
+</html>
